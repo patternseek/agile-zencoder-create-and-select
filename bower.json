@@ -1,0 +1,27 @@
+{
+  "name": "agile-zencoder-create-and-select",
+  "version": "0.0.1",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "authors": [
+    "Tolan Blundell <tolan@patternseek.net>"
+  ],
+  "description": "Populate a wrapped hidden input with a value from a filtered (via text input) JSON array either passed in directly or fetched from a URL.",
+  "keywords": [
+    "agile"
+  ],
+  "main": "agile-zencoder-create-and-select.html",
+  "homepage": "https://github.com/patternseek/agile-zencoder-create-and-select/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.1.0",
+    "iron-ajax": "polymerelements/iron-ajax#~1.0.8",
+    "neon-animation": "polymerelements/neon-animation#~1.0.8"
+  },
+  "devDependencies": {
+    "web-component-tester": "*"
+  }
+}
