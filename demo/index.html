@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>agile-zencoder-create-and-select</title>
+    <script src="../../webcomponentsjs/webcomponents.js"></script>
+    <script>
+        window.Polymer = window.Polymer || {};
+        window.Polymer.dom = 'shadow';
+    </script>
+    <link rel="import" href="../agile-zencoder-create-and-select.html">
+    
+</head>
+<body>
+
+    <form action="">
+        <agile-zencoder-create-and-select video-set-list-src="./test.json" create-name="My new videoset" create-url="target-page.html">
+            <input type="hidden" name="videosetID">
+        </agile-zencoder-create-and-select>
+        <br>
+        <input type="submit">
+    </form>
+
+</body>
+</html>

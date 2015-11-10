@@ -1,0 +1,153 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../pnsk-json-filter-select/pnsk-json-filter-select.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../neon-animation/animations/scale-down-animation.html">
+<dom-module id="agile-zencoder-create-and-select">
+    
+    <template>
+
+        <style>
+            *{
+                font-family:Sans-Serif;
+                font-size: 12px;
+            }
+
+            label{
+                display: block;
+                margin: 8px 0px;
+            }
+            input, button{
+                display: block;
+                margin: 8px 0px;
+            }
+            
+            #createForm{
+                display: none;
+            }
+
+
+        </style>
+
+        <div on-click="_showCreate">Create new videoset</div>
+        <div on-click="_showSelect">Select existing videoset</div>
+
+        <div id="createForm">
+            <label>
+                Video name
+                <input type="text" id="videosetname" name="createVideosetName" value="{{createName}}">
+            </label>
+            <label>
+                File
+                <input type="file" name="createVideosetFile" id="file" on-change="_setFiles">
+            </label>
+            <span class="error">[[showError]]</span>
+            <span class="message">[[showMessage]]</span>
+
+            <iron-ajax
+                    id="ajax"
+                    url="[[creatUrl]]"
+                    method="POST"
+                    handleAs="json"
+                    last-response="{{lastResponse}}"
+                    last-error="{{lastError}}"
+                    on-response="_onAjaxResponse"
+                    on-error="_onAjaxError">
+            </iron-ajax>
+            <input type="button" on-click="_createVideoset" value="Upload">
+        </div>
+
+
+        
+
+        
+        <pnsk-json-filter-select id="jsonSelector" src="[[videoSetListSrc]]" src-label-field="label" src-index-field="id" filter-text="[[createName]]">
+            <!-- Inner HTML here is set from the inner HTML of the root compopnent in ready(). -->
+        </pnsk-json-filter-select>
+        
+    </template>
+
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'agile-zencoder-create-and-select',
+        properties: {
+
+            /**
+             * Where to retrieve the JSON list of videosets from.
+             */
+            videoSetListSrc: String,
+            
+            createName: String,
+            
+            createUrl: String,
+
+        },
+
+        listeners: {
+            'jsonSelector.selectedChanged': '_handleSelectedChanged'
+        },
+
+        _showCreate: function(){
+            this.$.jsonSelector.style.display = 'none';
+            this.$.createForm.style.display = 'block';
+        },
+
+        _showSelect: function(){
+            this.$.createForm.style.display = 'none';
+            this.$.jsonSelector.style.display = 'block';
+        },
+
+        _setFiles: function(e) {
+            
+            this.file = this.$.file.files[0];
+            
+            // Override default type set by core-ajax.
+            // Allow browser to set the mime multipart content type itself. 
+            this.$.ajax.contentType = null;
+        },
+        
+        _createVideoset: function(e ) {
+            if (!this.file) {
+                alert('Please include a file');
+                return;
+            }
+
+            if ( !this.$.videosetname.value ) {
+                alert('Please enter a name');
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append( "createVideosetFile", this.file, this.file.name);
+            formData.append( "createVideosetName", this.$.videosetname.value );
+            this.$.ajax.body = formData;
+            this.$.ajax.generateRequest();
+        },
+        
+        _onAjaxResponse: function(){
+            this.$.videosetname.value = "";
+            this.$.file.value = "";
+            this.$.showMessage = "Encoding job submitted.";
+            this.$.jsonSelector.refresh();
+        },
+
+        _onAjaxError: function(){
+
+            this.showError = this.lastError.error.message;
+        },
+
+        _handleSelectedChanged: function(){
+            // Copy inner element inner html back into inner html for this
+            Polymer.dom(this).innerHTML = Polymer.dom(this.$.jsonSelector).innerHTML;
+        },
+        
+        ready: function(){
+            //alert("hi");
+            
+            Polymer.dom(this.$.jsonSelector).innerHTML = Polymer.dom(this).innerHTML;
+        }
+    });
+</script>
