@@ -1,7 +1,7 @@
 {
   "name": "agile-zencoder-create-and-select",
-  "version": "0.0.1",
-  "license": "http://polymer.github.io/LICENSE.txt",
+  "version": "0.1.2",
+ "license": "MIT",
   "authors": [
     "Tolan Blundell <tolan@patternseek.net>"
   ],
