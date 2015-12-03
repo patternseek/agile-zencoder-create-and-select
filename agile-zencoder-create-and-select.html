@@ -135,7 +135,6 @@
         },
 
         _onAjaxError: function(){
-
             this.showError = this.lastError.error.message;
         },
 
@@ -145,8 +144,6 @@
         },
         
         ready: function(){
-            //alert("hi");
-            
             Polymer.dom(this.$.jsonSelector).innerHTML = Polymer.dom(this).innerHTML;
         }
     });
