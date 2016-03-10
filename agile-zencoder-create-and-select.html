@@ -47,22 +47,21 @@
 
             <iron-ajax
                     id="ajax"
-                    url="[[creatUrl]]"
+                    url="[[createUrl]]"
                     method="POST"
                     handleAs="json"
                     last-response="{{lastResponse}}"
                     last-error="{{lastError}}"
                     on-response="_onAjaxResponse"
-                    on-error="_onAjaxError">
+                    on-error="_onAjaxError"
+                    content-type="application/x-www-form-urlencoded"
+            >
             </iron-ajax>
             <input type="button" on-click="_createVideoset" value="Upload">
         </div>
 
-
-        
-
-        
-        <pnsk-json-filter-select id="jsonSelector" src="[[videoSetListSrc]]" src-label-field="label" src-index-field="id" filter-text="[[createName]]">
+        <pnsk-json-filter-select id="jsonSelector" src="[[videoSetListSrc]]" src-label-field="label"
+                                 src-index-field="id">
             <!-- Inner HTML here is set from the inner HTML of the root compopnent in ready(). -->
         </pnsk-json-filter-select>
         
@@ -79,10 +78,9 @@
              * Where to retrieve the JSON list of videosets from.
              */
             videoSetListSrc: String,
-            
             createName: String,
-            
             createUrl: String,
+            createParams: Object
 
         },
 
@@ -123,6 +121,9 @@
             var formData = new FormData();
             formData.append( "createVideosetFile", this.file, this.file.name);
             formData.append( "createVideosetName", this.$.videosetname.value );
+            for (var i in this.createParams) {
+                formData.append(i, this.createParams[i]);
+            }
             this.$.ajax.body = formData;
             this.$.ajax.generateRequest();
         },
@@ -131,6 +132,7 @@
             this.$.videosetname.value = "";
             this.$.file.value = "";
             this.$.showMessage = "Encoding job submitted.";
+            this.$.jsonSelector.filterText = this.createName;
             this.$.jsonSelector.refresh();
         },
 
