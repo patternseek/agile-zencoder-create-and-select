@@ -272,16 +272,9 @@
             this.$.videosetname.value = "";
             this.$.file.value = "";
             this.$.showMessage = "Encoding job submitted.";
-            this.$.jsonSelector.refresh();
 
-            ...
-            set
-            selected
-            id
-            to
-            'createdID'
-            property in returned
-            json
+            this.$.jsonSelector.value = this.lastResponse.createdID;
+            this.$.jsonSelector.refresh();
 
             this._hideSpinner();
             this._showSelect();
