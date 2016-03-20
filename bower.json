@@ -1,6 +1,5 @@
 {
   "name": "agile-zencoder-create-and-select",
-  "version": "0.1.5",
   "license": "MIT",
   "authors": [
     "Tolan Blundell <tolan@patternseek.net>"
@@ -20,7 +19,7 @@
     "polymer": "Polymer/polymer#^1.1.0",
     "iron-ajax": "polymerelements/iron-ajax#~1.0.8",
     "neon-animation": "polymerelements/neon-animation#~1.0.8",
-    "pnsk-json-filter-select": "patternseek-pnsk-json-filter-select#~0.1.2"
+    "pnsk-json-filter-select": "patternseek-pnsk-json-filter-select#~0.2.0"
   },
   "devDependencies": {
     "web-component-tester": "*"
