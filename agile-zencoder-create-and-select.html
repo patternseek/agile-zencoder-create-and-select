@@ -15,8 +15,8 @@
             }
 
             :host {
-                min-width: 200px;
-                display: inline-block;
+                width: 280px;
+                display: block;
                 box-sizing: border-box;
                 padding: 5px;
                 border: 1px solid darkgray;
@@ -63,8 +63,10 @@
                 padding: 4px 6px 4px;
                 border-radius: 3px;
                 color: white;
+                width: auto !important;
             }
 
+            
             button {
                 margin: 8px 0 !important;
                 outline: 0;
@@ -194,7 +196,11 @@
             videoSetListSrc: String,
             createName: String,
             createUrl: String,
-            createParams: Object
+            createParams: Object,
+            value: {
+                type: Number,
+                observer: '_valueChanged'
+            }
 
         },
 
@@ -288,6 +294,14 @@
         _handleSelectedChanged: function(){
             // Copy inner element inner html back into inner html for this
             Polymer.dom(this).innerHTML = Polymer.dom(this.$.jsonSelector).innerHTML;
+            // Change local value
+            this.value = this.$.jsonSelector.value;
+            this.fire('change');
+        },
+        
+        _valueChanged: function( newValue ){
+            // Update json selector value
+            this.$.jsonSelector.value = newValue;
         },
         
         ready: function(){
