@@ -275,6 +275,11 @@
         },
         
         _onAjaxResponse: function(){
+            if (typeof this.lastResponse.error != "undefined") {
+                this.showError = this.lastResponse.error;
+                this._hideSpinner();
+                return;
+            } 
             this.$.videosetname.value = "";
             this.$.file.value = "";
             this.$.showMessage = "Encoding job submitted.";
